@@ -14,14 +14,6 @@ configurations {
     }
 }
 
-jar {
-    manifest {
-        attributes(
-                'Main-Class': 'com.ytwebapp.ChannelWebappApplication'
-        )
-    }
-}
-
 repositories {
     mavenCentral()
 }
@@ -38,4 +30,8 @@ dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.4'
     implementation 'org.springframework.boot:spring-boot-devtools'
+}
+
+tasks.jar {
+    enabled = false
 }
