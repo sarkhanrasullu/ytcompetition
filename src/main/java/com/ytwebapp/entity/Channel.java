@@ -50,7 +50,7 @@ public class Channel implements Serializable {
     private int bought;
 
     @Basic(optional = false)
-    @Column(name = "channel_link")
+    @Column(name = "channel_link", unique=true)
     private String channelLink;
 
     @Basic(optional = false)
