@@ -14,7 +14,7 @@ configurations {
     }
 }
 
-springBoot {
+bootJar {
     mainClassName = 'com.ytwebapp.ChannelWebappApplication'
 }
 
