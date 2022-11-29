@@ -15,7 +15,7 @@ configurations {
 }
 
 bootJar {
-    mainClassName = 'com.ytwebapp.ChannelWebappApplication'
+    mainClass = 'com.ytwebapp.ChannelWebappApplication'
 }
 
 repositories {
