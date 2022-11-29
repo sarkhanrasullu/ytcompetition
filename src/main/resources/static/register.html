@@ -9,7 +9,8 @@
         function addItem() {
             var cavabGelende = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    getAllChannels();
+                    document.getElementById('register').style = "display: none";
+                    document.getElementById('success').style = "display: block";
                 }
             };
             var xhttp = new XMLHttpRequest();
@@ -39,7 +40,7 @@
 </head>
 <body>
     <div>
-        <div class="modal-dialog">
+        <div class="modal-dialog" id="register">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalAddLabel">Kayıt ol</h5>
@@ -138,6 +139,17 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="addItem()">Add</button>
+                </div>
+            </div>
+        </div >
+
+        <div class="modal-dialog" id="success" style="display: none">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="form">
+                        Başarıyla Kayıt Oldunuz. Teşekkürler!
+
+                    </div>
                 </div>
             </div>
         </div>

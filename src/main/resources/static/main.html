@@ -22,7 +22,6 @@
                             .replace(":surname", channel.surname)
                             .replace(":channel", channel.channelLink)
                             .replace(":id", channel.id)
-                            .replace(":idForUpdate", channel.id)
                             .replace(":idForDetails", channel.id)
                         ;
                         tblRows.innerHTML+= filledTblRow;
@@ -55,33 +54,6 @@
             xhttp.send();
         }
 
-        function selectItemForUpdate(id) {
-            selectedId = id;
-            var cavabGelende = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                         var response = JSON.parse(this.responseText);
-                         var channel = response;
-                         document.getElementById("nameUpdate").value = channel.name;
-                         document.getElementById("surnameUpdate").value = channel.surname;
-                         document.getElementById("channelLinkUpdate").value = channel.channelLink;
-                         document.getElementById("ageUpdate").value = channel.age;
-                         document.getElementById("countryUpdate").value = channel.country;
-                         document.getElementById("cityUpdate").value = channel.city;
-                         document.getElementById("professionUpdate").value = channel.profession;
-                         document.getElementById("boughtUpdate").value = channel.bought;
-                         document.getElementById("subscribersCountUpdate").value = channel.subscribersCount;
-                         document.getElementById("genderUpdate").value = channel.gender;
-                         document.getElementById("phoneUpdate").value = channel.phone;
-                         document.getElementById("maritalStatusUpdate").value = channel.maritalStatus;
-                         document.getElementById("emailUpdate").value = channel.email;
-                }
-            };
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = cavabGelende;
-            xhttp.open("GET", "/channels/"+selectedId, true);
-            xhttp.send();
-        }
-
         function selectItemForDetails(id) {
             selectedId = id;
             var cavabGelende = function() {
@@ -107,35 +79,6 @@
             xhttp.onreadystatechange = cavabGelende;
             xhttp.open("GET", "/channels/"+selectedId, true);
             xhttp.send();
-        }
-
-        function updateItem() {
-            var cavabGelende = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    getAllChannels();
-                }
-            };
-            var xhttp = new XMLHttpRequest();
-
-            xhttp.onreadystatechange = cavabGelende;
-            xhttp.open("PUT", "/channels", true);
-            xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            xhttp.send(JSON.stringify({
-                id: selectedId,
-                name: document.getElementById("nameUpdate").value,
-                surname: document.getElementById("surnameUpdate").value,
-                channelLink: document.getElementById("channelLinkUpdate").value,
-                age: document.getElementById("ageUpdate").value,
-                country: document.getElementById("countryUpdate").value,
-                city: document.getElementById("cityUpdate").value,
-                profession: document.getElementById("professionUpdate").value,
-                bought: document.getElementById("boughtUpdate").value,
-                subscribersCount: document.getElementById("subscribersCountUpdate").value,
-                gender: document.getElementById("genderUpdate").value,
-                phone: document.getElementById("phoneUpdate").value,
-                maritalStatus: document.getElementById("maritalStatusUpdate").value,
-                email: document.getElementById("emailUpdate").value,
-            }));
         }
 
         function addItem() {
