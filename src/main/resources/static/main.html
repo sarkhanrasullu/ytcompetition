@@ -33,7 +33,7 @@
             var surname = document.getElementById("surname").value;
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = cavabGelende;
-            xhttp.open("GET", "http://localhost:8080/channels?name="+name+"&surname="+surname, true);
+            xhttp.open("GET", "/channels?name="+name+"&surname="+surname, true);
             xhttp.send();
         }
 
@@ -51,7 +51,7 @@
             };
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = cavabGelende;
-            xhttp.open("DELETE", "http://localhost:8080/channels?id="+selectedId, true);
+            xhttp.open("DELETE", "/channels?id="+selectedId, true);
             xhttp.send();
         }
 
@@ -78,7 +78,7 @@
             };
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = cavabGelende;
-            xhttp.open("GET", "http://localhost:8080/channels/"+selectedId, true);
+            xhttp.open("GET", "/channels/"+selectedId, true);
             xhttp.send();
         }
 
@@ -105,7 +105,7 @@
             };
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = cavabGelende;
-            xhttp.open("GET", "http://localhost:8080/channels/"+selectedId, true);
+            xhttp.open("GET", "/channels/"+selectedId, true);
             xhttp.send();
         }
 
@@ -118,7 +118,7 @@
             var xhttp = new XMLHttpRequest();
 
             xhttp.onreadystatechange = cavabGelende;
-            xhttp.open("PUT", "http://localhost:8080/channels", true);
+            xhttp.open("PUT", "/channels", true);
             xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             xhttp.send(JSON.stringify({
                 id: selectedId,
@@ -147,7 +147,7 @@
             var xhttp = new XMLHttpRequest();
 
             xhttp.onreadystatechange = cavabGelende;
-            xhttp.open("POST", "http://localhost:8080/channels", true);
+            xhttp.open("POST", "/channels", true);
             xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             xhttp.send(JSON.stringify({
                 name: document.getElementById("nameAdd").value,
