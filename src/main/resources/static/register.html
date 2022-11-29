@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Channels</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" ></script>
+    <script>
+        function addItem() {
+            var cavabGelende = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    getAllChannels();
+                }
+            };
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = cavabGelende;
+            xhttp.open("POST", "/channels", true);
+            xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhttp.send(JSON.stringify({
+                name: document.getElementById("nameAdd").value,
+                surname: document.getElementById("surnameAdd").value,
+                channelLink: document.getElementById("channelLinkAdd").value,
+                age: document.getElementById("ageAdd").value,
+                country: document.getElementById("countryAdd").value,
+                city: document.getElementById("cityAdd").value,
+                profession: document.getElementById("professionAdd").value,
+                bought: document.getElementById("boughtAdd").value,
+                subscribersCount: document.getElementById("subscribersCountAdd").value,
+                gender: document.getElementById("genderAdd").value,
+                phone: document.getElementById("phoneAdd").value,
+                maritalStatus: document.getElementById("maritalStatusAdd").value,
+                email: document.getElementById("emailAdd").value,
+            }));
+        }
+
+        document.addEventListener("DOMContentLoaded", getAllChannels);
+    </script>
+</head>
+<body>
+    <div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAddLabel">Kayıt ol</h5>
+                </div>
+                <div class="modal-body">
+                    <div id="form">
+                        <div>
+                            <label class="form-label" for="nameAdd" >
+                                İsim
+                            </label>
+                            <input class="form-control" name="name" id="nameAdd" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="surnameAdd" >
+                                Soyisim
+                            </label>
+                            <input class="form-control" name="surname" id="surnameAdd" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="ageAdd" >
+                                Yaşınız
+                            </label>
+                            <input class="form-control" name="age" id="ageAdd" type="number"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="genderAdd" >
+                                Cinsiyetiniz
+                            </label>
+                            <select class="form-select" id="genderAdd">
+                                <option value="1">Erkek</option>
+                                <option value="2">Kadın</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" for="maritalStatusAdd" >
+                                Medeni durumunuz
+                            </label>
+                            <select class="form-select" id="maritalStatusAdd">
+                                <option value="1">Bekar</option>
+                                <option value="2">Evli</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" for="professionAdd" >
+                                Mesleğiniz
+                            </label>
+                            <input class="form-control" name="profession" id="professionAdd" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="phoneAdd" >
+                                Telefon numaranız
+                            </label>
+                            <input class="form-control" name="phone" id="phoneAdd" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="emailadd" >
+                                Email
+                            </label>
+                            <input class="form-control" name="email" id="emailAdd" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="countryAdd" >
+                                Ülke
+                            </label>
+                            <input class="form-control" name="country" id="countryAdd" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="cityAdd" >
+                                Şehir
+                            </label>
+                            <input class="form-control" name="city" id="cityAdd" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="channelLinkAdd" >
+                                Kanal linki
+                            </label>
+                            <input class="form-control" name="channel" id="channelLinkAdd" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="boughtAdd" >
+                                YouTube Kanal Geliştirme eğitim setini satın aldım
+                            </label>
+                            <select class="form-select" id="boughtAdd">
+                                <option value="0">Hayır</option>
+                                <option value="1">Evet</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" for="subscribersCountAdd">
+                                YouTube kanal abone sayı
+                            </label>
+                            <input class="form-control" name="subscribersCount" id="subscribersCountAdd" type="number"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="addItem()">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
