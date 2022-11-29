@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Channels</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" ></script>
+    <script>
+        function getAllChannels() {
+            var cavabGelende = function() {
+
+                if (this.readyState == 4 && this.status == 200) {
+                    var response = JSON.parse(this.responseText);
+                    var channels = response;
+                    var tblRows = document.getElementById("tblRows");
+                    var tblRow = document.getElementById("tblRow").innerHTML;
+                    tblRows.innerHTML = "";
+                    for(var i=0;i<channels.length;i++) {
+                        var channel = channels[i];
+                        var filledTblRow = tblRow
+                            .replace(":name", channel.name)
+                            .replace(":surname", channel.surname)
+                            .replace(":channel", channel.channelLink)
+                            .replace(":id", channel.id)
+                            .replace(":idForUpdate", channel.id)
+                            .replace(":idForDetails", channel.id)
+                        ;
+                        tblRows.innerHTML+= filledTblRow;
+                    }
+                }
+            };
+            var name = document.getElementById("name").value;
+            var surname = document.getElementById("surname").value;
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = cavabGelende;
+            xhttp.open("GET", "http://localhost:8080/channels?name="+name+"&surname="+surname, true);
+            xhttp.send();
+        }
+
+        var selectedId;
+
+        function selectItem(id) {
+            this.selectedId = id;
+        }
+
+        function deleteItem() {
+            var cavabGelende = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    getAllChannels();
+                }
+            };
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = cavabGelende;
+            xhttp.open("DELETE", "http://localhost:8080/channels?id="+selectedId, true);
+            xhttp.send();
+        }
+
+        function selectItemForUpdate(id) {
+            selectedId = id;
+            var cavabGelende = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                         var response = JSON.parse(this.responseText);
+                         var channel = response;
+                         document.getElementById("nameUpdate").value = channel.name;
+                         document.getElementById("surnameUpdate").value = channel.surname;
+                         document.getElementById("channelLinkUpdate").value = channel.channelLink;
+                         document.getElementById("ageUpdate").value = channel.age;
+                         document.getElementById("countryUpdate").value = channel.country;
+                         document.getElementById("cityUpdate").value = channel.city;
+                         document.getElementById("professionUpdate").value = channel.profession;
+                         document.getElementById("boughtUpdate").value = channel.bought;
+                         document.getElementById("subscribersCountUpdate").value = channel.subscribersCount;
+                         document.getElementById("genderUpdate").value = channel.gender;
+                         document.getElementById("phoneUpdate").value = channel.phone;
+                         document.getElementById("maritalStatusUpdate").value = channel.maritalStatus;
+                         document.getElementById("emailUpdate").value = channel.email;
+                }
+            };
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = cavabGelende;
+            xhttp.open("GET", "http://localhost:8080/channels/"+selectedId, true);
+            xhttp.send();
+        }
+
+        function selectItemForDetails(id) {
+            selectedId = id;
+            var cavabGelende = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var response = JSON.parse(this.responseText);
+                    var channel = response;
+                    document.getElementById("nameDetails").value = channel.name;
+                    document.getElementById("surnameDetails").value = channel.surname;
+                    document.getElementById("channelLinkDetails").value = channel.channelLink;
+                    document.getElementById("ageDetails").value = channel.age;
+                    document.getElementById("countryDetails").value = channel.country;
+                    document.getElementById("cityDetails").value = channel.city;
+                    document.getElementById("professionDetails").value = channel.profession;
+                    document.getElementById("boughtDetails").value = channel.bought;
+                    document.getElementById("subscribersCountDetails").value = channel.subscribersCount;
+                    document.getElementById("genderDetails").value = channel.gender;
+                    document.getElementById("phoneDetails").value = channel.phone;
+                    document.getElementById("maritalStatusDetails").value = channel.maritalStatus;
+                    document.getElementById("emailDetails").value = channel.email;
+                }
+            };
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = cavabGelende;
+            xhttp.open("GET", "http://localhost:8080/channels/"+selectedId, true);
+            xhttp.send();
+        }
+
+        function updateItem() {
+            var cavabGelende = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    getAllChannels();
+                }
+            };
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = cavabGelende;
+            xhttp.open("PUT", "http://localhost:8080/channels", true);
+            xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhttp.send(JSON.stringify({
+                id: selectedId,
+                name: document.getElementById("nameUpdate").value,
+                surname: document.getElementById("surnameUpdate").value,
+                channelLink: document.getElementById("channelLinkUpdate").value,
+                age: document.getElementById("ageUpdate").value,
+                country: document.getElementById("countryUpdate").value,
+                city: document.getElementById("cityUpdate").value,
+                profession: document.getElementById("professionUpdate").value,
+                bought: document.getElementById("boughtUpdate").value,
+                subscribersCount: document.getElementById("subscribersCountUpdate").value,
+                gender: document.getElementById("genderUpdate").value,
+                phone: document.getElementById("phoneUpdate").value,
+                maritalStatus: document.getElementById("maritalStatusUpdate").value,
+                email: document.getElementById("emailUpdate").value,
+            }));
+        }
+
+        function addItem() {
+            var cavabGelende = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    getAllChannels();
+                }
+            };
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = cavabGelende;
+            xhttp.open("POST", "http://localhost:8080/channels", true);
+            xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhttp.send(JSON.stringify({
+                name: document.getElementById("nameAdd").value,
+                surname: document.getElementById("surnameAdd").value,
+                channelLink: document.getElementById("channelLinkAdd").value,
+                age: document.getElementById("ageAdd").value,
+                country: document.getElementById("countryAdd").value,
+                city: document.getElementById("cityAdd").value,
+                profession: document.getElementById("professionAdd").value,
+                bought: document.getElementById("boughtAdd").value,
+                subscribersCount: document.getElementById("subscribersCountAdd").value,
+                gender: document.getElementById("genderAdd").value,
+                phone: document.getElementById("phoneAdd").value,
+                maritalStatus: document.getElementById("maritalStatusAdd").value,
+                email: document.getElementById("emailAdd").value,
+            }));
+        }
+
+        document.addEventListener("DOMContentLoaded", getAllChannels);
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Contest</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item" onclick="foo()">
+                        <a class="nav-link" href="#">Channels</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h1>Channels</h1>
+    <div id="form" class="col-3 m-lg-3">
+        <div class="mb-3">
+            <label class="form-label" for="name" >
+                name
+            </label>
+            <input class="form-control" name="name" id="name" type="text"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="surname" >
+                surname
+            </label>
+            <input class="form-control" name="surname" id="surname" type="text"/>
+        </div>
+
+        <button onclick="getAllChannels()" class="btn btn-primary">SEARCH</button>
+        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalAdd">Add</button>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>name</th>
+                <th>surname</th>
+                <th>channel</th>
+<!--                <th>delete</th>-->
+                <th>update</th>
+                <th>details</th>
+            </tr>
+            </thead>
+            <tbody id="tblRows">
+
+            </tbody>
+        </table>
+    </div>
+
+    <div style="display: none" >
+        <table>
+            <tbody id="tblRow">
+                <tr >
+                    <td>
+                        :name
+                    </td>
+                    <td>
+                        :surname
+                    </td>
+                    <td>
+                        :channel
+                    </td>
+<!--                    <td>-->
+<!--                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete"  onclick="selectItem(:id)">delete</button>-->
+<!--                    </td>-->
+                    <td>
+                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalUpdate" onclick="selectItemForUpdate(:idForUpdate)">update</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalDetails" onclick="selectItemForDetails(:idForDetails)">details</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Delete Modal -->
+    <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDeleteLabel">Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure to delete?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteItem()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Modal -->
+    <div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="modalUpdateLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalUpdateLabel">Bilgileri Yenile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="form">
+                        <div>
+                            <label class="form-label" for="nameUpdate" >
+                                İsim
+                            </label>
+                            <input class="form-control" name="name" id="nameUpdate" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="surnameUpdate" >
+                                Soyisim
+                            </label>
+                            <input class="form-control" name="surname" id="surnameUpdate" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="ageUpdate" >
+                                Yaşınız
+                            </label>
+                            <input class="form-control" name="age" id="ageUpdate" type="number"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="genderUpdate" >
+                                Cinsiyetiniz
+                            </label>
+                            <select class="form-select" id="genderUpdate">
+                                <option value="1">Erkek</option>
+                                <option value="2">Kadın</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" for="maritalStatusUpdate" >
+                                Medeni durumunuz
+                            </label>
+                            <select class="form-select" id="maritalStatusUpdate">
+                                <option value="1">Bekar</option>
+                                <option value="2">Evli</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" for="professionUpdate" >
+                                Mesleğiniz
+                            </label>
+                            <input class="form-control" name="profession" id="professionUpdate" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="phoneUpdate" >
+                                Telefon numaranız
+                            </label>
+                            <input class="form-control" name="phone" id="phoneUpdate" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="emailupdate" >
+                                Email
+                            </label>
+                            <input class="form-control" name="email" id="emailUpdate" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="countryUpdate" >
+                                Ülke
+                            </label>
+                            <input class="form-control" name="country" id="countryUpdate" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="cityUpdate" >
+                                Şehir
+                            </label>
+                            <input class="form-control" name="city" id="cityUpdate" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="channelLinkUpdate" >
+                                Kanal linki
+                            </label>
+                            <input class="form-control" name="channel" id="channelLinkUpdate" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="boughtUpdate" >
+                                YouTube Kanal Geliştirme eğitim setini satın aldım
+                            </label>
+                            <select class="form-select" id="boughtUpdate">
+                                <option value="0">Hayır</option>
+                                <option value="1">Evet</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" for="subscribersCountUpdate">
+                                YouTube kanal abone sayı
+                            </label>
+                            <input class="form-control" name="subscribersCount" id="subscribersCountUpdate" type="number"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="updateItem()">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Modal -->
+    <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="modalAddLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAddLabel">Kayıt ol</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="form">
+                        <div>
+                            <label class="form-label" for="nameAdd" >
+                                İsim
+                            </label>
+                            <input class="form-control" name="name" id="nameAdd" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="surnameAdd" >
+                                Soyisim
+                            </label>
+                            <input class="form-control" name="surname" id="surnameAdd" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="ageAdd" >
+                                Yaşınız
+                            </label>
+                            <input class="form-control" name="age" id="ageAdd" type="number"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="genderAdd" >
+                                Cinsiyetiniz
+                            </label>
+                            <select class="form-select" id="genderAdd">
+                                <option value="1">Erkek</option>
+                                <option value="2">Kadın</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" for="maritalStatusAdd" >
+                                Medeni durumunuz
+                            </label>
+                            <select class="form-select" id="maritalStatusAdd">
+                                <option value="1">Bekar</option>
+                                <option value="2">Evli</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" for="professionAdd" >
+                                Mesleğiniz
+                            </label>
+                            <input class="form-control" name="profession" id="professionAdd" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="phoneAdd" >
+                                Telefon numaranız
+                            </label>
+                            <input class="form-control" name="phone" id="phoneAdd" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="emailadd" >
+                                Email
+                            </label>
+                            <input class="form-control" name="email" id="emailAdd" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="countryAdd" >
+                                Ülke
+                            </label>
+                            <input class="form-control" name="country" id="countryAdd" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="cityAdd" >
+                                Şehir
+                            </label>
+                            <input class="form-control" name="city" id="cityAdd" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="channelLinkAdd" >
+                                Kanal linki
+                            </label>
+                            <input class="form-control" name="channel" id="channelLinkAdd" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="boughtAdd" >
+                                YouTube Kanal Geliştirme eğitim setini satın aldım
+                            </label>
+                            <select class="form-select" id="boughtAdd">
+                                <option value="0">Hayır</option>
+                                <option value="1">Evet</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" for="subscribersCountAdd">
+                                YouTube kanal abone sayı
+                            </label>
+                            <input class="form-control" name="subscribersCount" id="subscribersCountAdd" type="number"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="addItem()">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Details Details -->
+    <div class="modal fade" id="modalDetails" tabindex="-1" aria-labelledby="modalDetailsLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDetailsLabel">Detaylı Bilgiler</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="form">
+                        <div>
+                            <label class="form-label" for="nameDetails" >
+                                İsim
+                            </label>
+                            <input disabled class="form-control" name="name" id="nameDetails" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="surnameDetails" >
+                                Soyisim
+                            </label>
+                            <input disabled class="form-control" name="surname" id="surnameDetails" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="ageDetails" >
+                                Yaşınız
+                            </label>
+                            <input disabled class="form-control" name="age" id="ageDetails" type="number"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="genderDetails" >
+                                Cinsiyetiniz
+                            </label>
+                            <select disabled class="form-select" id="genderDetails">
+                                <option value="1">Erkek</option>
+                                <option value="2">Kadın</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" for="maritalStatusDetails" >
+                                Medeni durumunuz
+                            </label>
+                            <select disabled class="form-select" id="maritalStatusDetails">
+                                <option value="1">Bekar</option>
+                                <option value="2">Evli</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" for="professionDetails" >
+                                Mesleğiniz
+                            </label>
+                            <input disabled class="form-control" name="profession" id="professionDetails" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="phoneDetails" >
+                                Telefon numaranız
+                            </label>
+                            <input disabled class="form-control" name="phone" id="phoneDetails" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="emailDetails" >
+                                Email
+                            </label>
+                            <input disabled class="form-control" name="email" id="emailDetails" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="countryDetails" >
+                                Ülke
+                            </label>
+                            <input disabled class="form-control" name="country" id="countryDetails" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="cityDetails" >
+                                Şehir
+                            </label>
+                            <input disabled class="form-control" name="city" id="cityDetails" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="channelLinkDetails" >
+                                Kanal linki
+                            </label>
+                            <input disabled class="form-control" name="channel" id="channelLinkDetails" type="text"/>
+                        </div>
+                        <div>
+                            <label class="form-label" for="boughtDetails" >
+                                YouTube Kanal Geliştirme eğitim setini satın aldım
+                            </label>
+                            <select disabled class="form-select" id="boughtDetails">
+                                <option value="0">Hayır</option>
+                                <option value="1">Evet</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" for="subscribersCountDetails">
+                                YouTube kanal abone sayı
+                            </label>
+                            <input disabled class="form-control" name="subscribersCount" id="subscribersCountDetails" type="number"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

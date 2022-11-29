@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Yarışma</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" ></script>
+    <script>
+        var competitionId;
+        function createCompetition() {
+            setDetails({});
+            var competitionStatus = document.getElementById("competitionStatus");
+            competitionStatus.innerHTML = "yarışma oluşturuluyor...";
+            var cavabGelende = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    competitionId = JSON.parse(this.responseText).id;
+                    competitionStatus.innerHTML = "Yarışma oluşturuldu. Yarışma numarası:"+competitionId;
+                }
+            };
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = cavabGelende;
+            xhttp.open("POST", "/competitions/create-competition", true);
+            xhttp.send();
+        }
+
+        var spinning = "/searching.html";
+        var w = window.open(spinning);
+        function findWinner() {
+            setDetails({});
+            var bought = document.getElementById("bought").value;
+            var subscribersCount = document.getElementById("subscribersCount").value;
+            w.location.href = spinning;
+            setTimeout(function() {
+                var cavabGelende = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var winner = JSON.parse(this.responseText);
+                        setDetails(winner);
+                        console.log(winner.channelLink);
+                        w.location.href = winner.channelLink;
+                    }
+                };
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = cavabGelende;
+                xhttp.open("GET", "/channels/winner?subscribersCount="+subscribersCount+"&bought="+bought, true);
+                xhttp.send();
+            }, 3000);
+        }
+
+
+
+
+        function setDetails(channel) {
+            document.getElementById("nameDetails").value = channel.name;
+            document.getElementById("surnameDetails").value = channel.surname;
+            document.getElementById("channelLinkDetails").value = channel.channelLink;
+            document.getElementById("ageDetails").value = channel.age;
+            document.getElementById("countryDetails").value = channel.country;
+            document.getElementById("cityDetails").value = channel.city;
+            document.getElementById("professionDetails").value = channel.profession;
+            document.getElementById("boughtDetails").value = channel.bought;
+            document.getElementById("subscribersCountDetails").value = channel.subscribersCount;
+            document.getElementById("genderDetails").value = channel.gender;
+            document.getElementById("phoneDetails").value = channel.phone;
+            document.getElementById("maritalStatusDetails").value = channel.maritalStatus;
+            document.getElementById("emailDetails").value = channel.email;
+        }
+
+        document.addEventListener("DOMContentLoaded", getAllChannels);
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Contest</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item" onclick="foo()">
+                        <a class="nav-link" href="#">Channels</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h1>Yarışma</h1>
+   <div class="row">
+       <div id="form" class="col-3 m-lg-3">
+           <div class="mb-3">
+               <label class="form-label" for="subscribersCount" >
+                   Abone sayı
+               </label>
+               <input class="form-control" name="subscribersCount" id="subscribersCount" type="text"/>
+           </div>
+           <div class="mb-3">
+               <label class="form-label" for="bought" >
+                   Udemyden satın aldımı?
+               </label>
+               <select class="form-select" id="bought">
+                   <option value="1">Evet</option>
+                   <option value="0">Hayır</option>
+                   <option value="">Hepsi</option>
+               </select>
+           </div>
+
+           <button onclick="findWinner()" class="btn btn-warning">Şanslı Kişi</button>
+           <div id="competitionStatus">
+           </div>
+           <div>
+               <div id="form">
+                   <div>
+                       <label class="form-label" for="nameDetails" >
+                           İsim
+                       </label>
+                       <input disabled class="form-control" name="name" id="nameDetails" type="text"/>
+                   </div>
+                   <div>
+                       <label class="form-label" for="surnameDetails" >
+                           Soyisim
+                       </label>
+                       <input disabled class="form-control" name="surname" id="surnameDetails" type="text"/>
+                   </div>
+                   <div>
+                       <label class="form-label" for="ageDetails" >
+                           Yaşınız
+                       </label>
+                       <input disabled class="form-control" name="age" id="ageDetails" type="number"/>
+                   </div>
+                   <div>
+                       <label class="form-label" for="genderDetails" >
+                           Cinsiyetiniz
+                       </label>
+                       <select disabled class="form-select" id="genderDetails">
+                           <option value="1">Erkek</option>
+                           <option value="2">Kadın</option>
+                       </select>
+                   </div>
+                   <div>
+                       <label class="form-label" for="maritalStatusDetails" >
+                           Medeni durumunuz
+                       </label>
+                       <select disabled class="form-select" id="maritalStatusDetails">
+                           <option value="1">Bekar</option>
+                           <option value="2">Evli</option>
+                       </select>
+                   </div>
+                   <div>
+                       <label class="form-label" for="professionDetails" >
+                           Mesleğiniz
+                       </label>
+                       <input disabled class="form-control" name="profession" id="professionDetails" type="text"/>
+                   </div>
+                   <div>
+                       <label class="form-label" for="phoneDetails" >
+                           Telefon numaranız
+                       </label>
+                       <input disabled class="form-control" name="phone" id="phoneDetails" type="text"/>
+                   </div>
+                   <div>
+                       <label class="form-label" for="emailDetails" >
+                           Email
+                       </label>
+                       <input disabled class="form-control" name="email" id="emailDetails" type="text"/>
+                   </div>
+                   <div>
+                       <label class="form-label" for="countryDetails" >
+                           Ülke
+                       </label>
+                       <input disabled class="form-control" name="country" id="countryDetails" type="text"/>
+                   </div>
+                   <div>
+                       <label class="form-label" for="cityDetails" >
+                           Şehir
+                       </label>
+                       <input disabled class="form-control" name="city" id="cityDetails" type="text"/>
+                   </div>
+                   <div>
+                       <label class="form-label" for="channelLinkDetails" >
+                           Kanal linki
+                       </label>
+                       <input disabled class="form-control" name="channel" id="channelLinkDetails" type="text"/>
+                   </div>
+                   <div>
+                       <label class="form-label" for="boughtDetails" >
+                           YouTube Kanal Geliştirme eğitim setini satın aldım
+                       </label>
+                       <select disabled class="form-select" id="boughtDetails">
+                           <option value="0">Hayır</option>
+                           <option value="1">Evet</option>
+                       </select>
+                   </div>
+                   <div>
+                       <label class="form-label" for="subscribersCountDetails">
+                           YouTube kanal abone sayı
+                       </label>
+                       <input disabled class="form-control" name="subscribersCount" id="subscribersCountDetails" type="text"/>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+    <br/>
+    <br/>
+    <br/>
+
+</body>
+
+</html>
